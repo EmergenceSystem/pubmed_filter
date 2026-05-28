@@ -1,0 +1,8 @@
+# Erlang build artifacts
+_build/
+.rebar3/
+ebin/
+*.beam
+*.plt
+rebar.lock
+
