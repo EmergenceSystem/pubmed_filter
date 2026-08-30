@@ -166,7 +166,7 @@ parse_summaries(Ids, JsonBin) ->
     try json:decode(JsonBin) of
         #{<<"result">> := Result} when is_map(Result) ->
             lists:filtermap(fun(Id) ->
-                IdBin = list_to_binary(Id),
+                IdBin = unicode:characters_to_binary(Id),
                 case maps:get(IdBin, Result, undefined) of
                     undefined -> false;
                     Article   -> build_embryo(Id, Article)
@@ -186,10 +186,10 @@ build_embryo(Id, #{<<"title">> := Title} = Article) ->
     Resume  = format_resume(Authors, Source, PubDate),
     {true, #{
         <<"properties">> => #{
-            <<"url">>    => list_to_binary(Url),
-            <<"resume">> => list_to_binary(Resume),
+            <<"url">>    => unicode:characters_to_binary(Url),
+            <<"resume">> => unicode:characters_to_binary(Resume),
             <<"title">>  => Title,
-            <<"pmid">>   => list_to_binary(Id),
+            <<"pmid">>   => unicode:characters_to_binary(Id),
             <<"source">> => <<"pubmed.ncbi.nlm.nih.gov">>
         }
     }};
